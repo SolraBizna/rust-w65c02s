@@ -4,7 +4,13 @@
 //!
 //! This crate accurately simulates all bus signals of the W65C02S except RDY,
 //! SOB, and BE, which can all be simulated by outside code. It is written in
-//! such a way that the unused bus logic usually gets optimized out.
+//! such a way that the unused bus logic usually gets optimized out. Make sure
+//! LTO is enabled in your `Cargo.toml` for a tremendous speedup:
+//!
+//! ```toml
+//! [profile.release]
+//! lto = true
+//! ```
 //!
 //! This crate does not depend on any other libraries, including the standard
 //! library.
@@ -17,7 +23,7 @@
 //! The accuracy of this simulation has been tested on the [`65test` test
 //! suite](https://github.com/SolraBizna/65test), which contains over 4500
 //! tests. In every single test, the simulator's bus traffic is *exactly* the
-//! same as the real hardware—even down to the timing of IRQ and NMI signals.
+//! same as the real hardware—even down to the timing of IRQ and NMI responses.
 //! This means that this simulator is suitable for prototyping and simulation
 //! of real systems using the W65C02S processor, including systems based on the
 //! W65C134S MCU.
@@ -120,9 +126,8 @@ use addressing_modes::*;
 
 /// Implements a system connected to a W65C02S's bus. Only `read` and `write`
 /// need be implemented for a simple system, but other systems may be more
-/// more complicated; for instance, many 65C02-based microcontrollers and
-/// systems have advanced interrupt vectoring logic that would require
-/// implementing `read_vector`.
+/// complicated; for instance, many 65C02-based microcontrollers have advanced
+/// interrupt vectoring logic that would require implementing `read_vector`.
 pub trait System {
     /// Read an instruction opcode from the given address. VPB, MLB, and SYNC
     /// are all HIGH.

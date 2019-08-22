@@ -4,7 +4,13 @@ revolution, the 6502.
 
 This crate accurately simulates all bus signals of the W65C02S except RDY,
 SOB, and BE, which can all be simulated by outside code. It is written in
-such a way that the unused bus logic usually gets optimized out.
+such a way that the unused bus logic usually gets optimized out. Make sure
+LTO is enabled in your `Cargo.toml` for a tremendous speedup:
+
+```toml
+[profile.release]
+lto = true
+```
 
 This crate does not depend on any other libraries, including the standard
 library.
