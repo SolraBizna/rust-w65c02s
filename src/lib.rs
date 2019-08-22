@@ -217,7 +217,7 @@ pub const RESET_VECTOR: u16 = 0xfffc;
 pub const NMI_VECTOR: u16 = 0xfffa;
 
 /// The CPU is in one of the given states between `step`s.
-#[derive(Clone,Copy,PartialEq,Eq)]
+#[derive(Clone,Copy,Debug,PartialEq,Eq)]
 pub enum State {
     /// The CPU has just been reset. It will execute the reset sequence at the
     /// next step. RDY is HIGH.
@@ -235,6 +235,7 @@ pub enum State {
 
 /// An instance of a W65C02S, encapsulating the entire runtime state of the
 /// processor itself. Not very useful without a `System` to go with it.
+#[derive(Copy,Clone,Debug,PartialEq,Eq)]
 pub struct W65C02S {
     state: State, pc: u16,
     a: u8, x: u8, y: u8, s: u8, p: u8,
