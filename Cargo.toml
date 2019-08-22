@@ -1,6 +1,6 @@
 [package]
 name = "w65c02s"
-version = "0.9.0"
+version = "0.9.1"
 authors = ["Solra Bizna <solra@bizna.name>"]
 edition = "2018"
 description = "Cycle-accurate, exhaustively tested simulator of W65C02S microprocessor"
