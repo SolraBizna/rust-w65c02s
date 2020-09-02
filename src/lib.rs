@@ -413,8 +413,9 @@ impl W65C02S {
                     system.read_spurious(self, opcode_addr);
                     self.push(system, (opcode_addr >> 8) as u8);
                     self.push(system, opcode_addr as u8);
-                    self.push(system, self.p);
+                    self.push(system, self.p & !P_B);
                     self.p &= !P_D;
+                    self.p |= P_I;
                     self.pc = (self.pc & 0xFF00) | (system.read_vector(self, NMI_VECTOR) as u16);
                     self.pc = (self.pc & 0x00FF) | (system.read_vector(self, NMI_VECTOR+1) as u16) << 8;
                 }
