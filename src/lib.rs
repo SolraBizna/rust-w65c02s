@@ -260,6 +260,13 @@ impl W65C02S {
             nmi: false, nmi_edge: false, nmi_pending: false,
         }
     }
+    /// Resets the CPU. Execution will flounder for a few cycles, then fetch
+    /// the reset vector and "start over".
+    pub fn reset(&mut self) {
+        self.state = State::HasBeenReset;
+        self.s = 0;
+        self.p = P_1|P_I;
+    }
     /// Get the current value of the **P**rogram **C**ounter, i.e. the next
     /// instruction that will (probably) be executed.
     pub fn get_pc(&self) -> u16 { self.pc }
