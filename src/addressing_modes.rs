@@ -389,7 +389,6 @@ impl AddressingMode for ZeroPageIndirect {
         let pc = cpu.read_pc_postincrement();
         let addr = system.read_operand(cpu, pc);
         let ea_low = system.read_pointer(cpu, addr as u16);
-        // TODO: Does it cross page boundaries?
         let ea_high = system.read_pointer(cpu, addr.wrapping_add(1) as u16);
         SimpleEA { ea: (ea_high as u16) << 8 | (ea_low as u16) }
     }
