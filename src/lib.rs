@@ -347,7 +347,9 @@ impl W65C02S {
     /// extremely rapid ones. If these conditions arise on real hardware, chaos
     /// will ensue anyway.
     pub fn set_nmi(&mut self, nmi: bool) {
-        self.nmi_edge = self.nmi_edge || (!self.nmi_edge && nmi);
+        if(!self.nmi) {
+            self.nmi_edge = self.nmi_edge || (!self.nmi_edge && nmi);
+        }
         self.nmi = nmi;
     }
     /// Internal function. Updates the IRQ and NMI edge flags.
